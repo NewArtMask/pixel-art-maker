@@ -1,0 +1,54 @@
+#draw_cell {
+	display: inline-block;
+	width: 903px;
+	height: 540px;
+	border: 2px solid black;
+	padding: 3px 0px 2px 2px;
+}
+
+#draw_cell div {
+	display: inline-block;
+	border: 1px solid black;
+	width: 17px;
+	height: 17px;
+	margin-right: -1px;
+	margin-bottom: -4px;
+	margin-top: -1px;
+}
+
+._palette {
+	display: block;
+	width: 903px;
+	height: 18px;
+	border: 2px solid black;
+	padding: 3px 0px 2px 2px;
+	margin-top: 10px;
+}
+
+._palette div {
+	display: inline-block;
+	border: 1px solid black;
+	width: 17px;
+	height: 17px;
+	margin-right: -1px;
+	margin-bottom: -4px;
+	margin-top: -1px;
+}
+
+#brush_color_indicator {
+	display: inline-block;
+	position: absolute;
+	top: 471px;
+	width: 40px;
+	height: 80px;
+	border: 2px solid black;
+	padding-left: 2px;
+	padding-top: 2px;
+	margin-left: 10px;
+}
+
+#brush_color_indicator div {
+	width: 36px;
+	height: 76px;
+	border: 1px solid black;
+}
