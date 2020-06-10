@@ -14,13 +14,13 @@ const Cell = (cells,rows,lines) => {
 }
 
 Cell(draw_cell,50,30); //To make cell for draw
-Cell(_palette,50,1); //To make cell for palette
+Cell(_palette,50,1);   //To make cell for palette
 
 
-let arr = _palette.childNodes;
-let arr_cell = draw_cell.childNodes;
+let arr = _palette.childNodes;      //Arrey of colors for palette
+let arr_cell = draw_cell.childNodes;//Arrey of cell on the draw grid
 
-//Colors for palette
+//////////////////////////////////////////////////Colors for palette
 arr[0].style.backgroundColor = "beige";
 arr[1].style.backgroundColor = "AntiqueWhite";
 arr[2].style.backgroundColor = "bisque";
@@ -72,25 +72,56 @@ arr[47].style.backgroundColor = "gainsboro";
 arr[48].style.backgroundColor = "whiteSmoke";
 arr[49].style.backgroundColor = "whiteSpace";
 
-let colorBuffer = 'whiteSpace';
+let colorHolder = {};      //Object for holding color from/for local storage
+let colorBuffer = 'white'; //First color for buffer
+let label = document.querySelector('label');
+label.style.backgroundColor = colorBuffer;
 
-brush_color_indicator.appendChild(document.createElement('div'));
-
-const getColor = () => {
-	colorBuffer = event.target.style.backgroundColor;
-	brush_color_indicator.childNodes[0].style.backgroundColor = colorBuffer;
-	event.stopPropagation;
+const getCellColorFromLocalStorage = (cellColorBG) => {// Get background color for palette from local storage//
+	for(let i=0; i<arr_cell.length-1; i++)                                                                   //
+		if(cellColorBG[i]) colorHolder[i] = arr_cell[i].style.backgroundColor = cellColorBG[i];              //
+}                                                                                                            //
+                                                                                                             //
+if(localStorage.getItem('cellColorBG')){                                                                     //
+	getCellColorFromLocalStorage(JSON.parse(localStorage.getItem('cellColorBG')));                           //
 }
 
-for(let i=0; i<arr.length-1; i++){
-	arr[i].addEventListener('click', getColor);
-}
+const getColor = () => {                              // To get color from palette//
+	colorBuffer = event.target.style.backgroundColor;							  //
+	label.style.backgroundColor = colorBuffer;									  //
+	event.stopPropagation;           											  //
+}																				  //
+																		          //
+for(let i=0; i<arr.length-1; i++){												  //
+	arr[i].addEventListener('click', getColor);									  //
+}																				  //
 
-const setColor = () => {
-	event.target.style.backgroundColor = colorBuffer;
-	event.stopPropagation;
-}
+const getColorFromInput = () => {                     // To get color from input//
+	colorBuffer=event.target.value;												//
+	label.style.backgroundColor = colorBuffer;									//
+}																				//
+																				//
+label.addEventListener('change', getColorFromInput);							//
 
-for(let i=0; i<arr_cell.length-1; i++){
-	if(arr_cell[i].tagName != 'BR') arr_cell[i].addEventListener('click',setColor);
-}
+let trigger = false; // Mouse is up
+
+const setColor = (i) => {                           					    // To set color on draw grid//
+	if(trigger){ //If mouse is down										  							    //
+		colorHolder[i] = event.target.style.backgroundColor = colorBuffer;							    //
+		localStorage.setItem('cellColorBG', JSON.stringify(colorHolder));//set color to locar storage   //
+	}																								    //
+	event.stopPropagation;																			    //
+}																									    //
+                                                                                                        //
+for(let i=0; i<arr_cell.length-1; i++){																	//
+	if(arr_cell[i].tagName != 'BR') {																	//
+		arr_cell[i].addEventListener('mousedown',()=>{													//
+			trigger = true;																				//
+			setColor(i);																				//
+		});																								//
+		arr_cell[i].addEventListener('mouseenter', ()=> setColor(i));									//
+		window.addEventListener('mouseup',()=>{															//
+			trigger = false;																			//
+		});																								//
+	}																									//
+}																										//

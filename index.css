@@ -1,3 +1,7 @@
+.canvas {
+	display: block;
+}
+	
 #draw_cell {
 	display: inline-block;
 	width: 903px;
@@ -39,6 +43,7 @@
 	display: inline-block;
 	position: absolute;
 	top: 471px;
+	left: 917px;
 	width: 40px;
 	height: 80px;
 	border: 2px solid black;
@@ -47,7 +52,11 @@
 	margin-left: 10px;
 }
 
-#brush_color_indicator div {
+input {
+	visibility: hidden;
+}
+label {
+	display: inline-block;
 	width: 36px;
 	height: 76px;
 	border: 1px solid black;
