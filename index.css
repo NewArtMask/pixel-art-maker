@@ -4,6 +4,7 @@
 	
 #draw_cell {
 	display: inline-block;
+	background-color: rgb(255, 255, 255);
 	width: 903px;
 	height: 540px;
 	border: 2px solid black;
